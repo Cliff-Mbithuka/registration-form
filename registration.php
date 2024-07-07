@@ -1,7 +1,7 @@
 <?php 
 session_start();
 if(!isset($_SESSION["user"])){
-    header("Lfocation: index.php");
+    header("Location: index.php");
 }
 ?>
 
