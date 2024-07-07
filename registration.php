@@ -17,7 +17,11 @@
             $email = $_POST['email'];
             $password = $_POST['password'];
             $passwordRepeat = $_POST['repeat_password'];
+
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
             $errors = array();
+
             if(empty($fullname) OR empty($email) OR empty($password) OR empty($passwordRepeat)){
                 array_push($errors, "All fields are required");
             }
@@ -36,7 +40,17 @@
                   echo "<div class='alert alert-danger'>$error</div>";
                 }
             }else{
-                // insert data in the database
+                require_once "database.php";
+                $sql = "INSERT INTO users (full_name, email, password) VALUES ( ?, ?, ? )";
+                $stmt = mysqli_stmt_init($conn);
+                $prepareStmt = mysqli_stmt_prepare($stmt,$sql);
+                if($prepareStmt){
+                    mysqli_stmt_bind_param($stmt, "sss", $fullname, $email, $passwordHash);
+                    mysqli_stmt_execute($stmt);
+                    echo "<div class='alert alert-success'>You are registered successfully.</div>";
+                }else{
+                    die("something went wrong");
+                }
             }
         }
         ?>
