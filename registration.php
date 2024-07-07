@@ -1,3 +1,10 @@
+<?php 
+session_start();
+if(!isset($_SESSION["user"])){
+    header("Lfocation: index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -79,6 +86,7 @@
             <input type="submit" class="btn btn-primary" name="submit" value="Register">
         </div>
         </form>
+        <div><p>Already Registered<a href="login.php">login here</a></p></div>
     </div>
 
 </body>
